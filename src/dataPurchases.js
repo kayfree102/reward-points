@@ -1,4 +1,4 @@
-export const dataCustomers =[
+ export const dataCustomers =[
   {
     "id": 1,
     "name": "Dania Norrey",
@@ -301,3 +301,45 @@ export const dataCustomers =[
     "date": "7/30/2021"
   }]
 
+// const rewards = {
+//   "Darryl Hasely": {
+//     "6": 100,
+//     "7": 150,
+//     "8": 100,
+//     total: 350,
+//   },
+//   "Rob Ioselev":{
+//     "6": 100,
+//     "7": 150,
+//     "8": 100,
+//     total: 350,
+//   }
+// }
+const rewards = {
+
+}
+dataCustomers.forEach((transaction) =>{
+  let purchase = Math.floor(Number(transaction.purchase.slice(1)));
+  if(purchase > 50){
+     let onePoint = purchase - 50;
+     let twoPoint = purchase > 100 ? (purchase-100)*2 : 0;
+     let totalPoints = onePoint + twoPoint;
+     let month = transaction.date[0];
+
+     if(!rewards[transaction.name]){
+       rewards[transaction.name] = {6:0, 7:0, 8:0, total:0}
+     }
+     rewards[transaction.name][month] += totalPoints;
+     rewards[transaction.name].total +=totalPoints;
+     //rewards["Rob"]["6"]
+  }
+})
+
+const newData = [];
+for(let key in rewards){
+  newData.push({
+    ...rewards[key],
+    name:key
+  })
+}
+export const rewardsArray = newData;
